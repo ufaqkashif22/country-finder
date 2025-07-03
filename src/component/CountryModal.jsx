@@ -16,7 +16,8 @@ export default function CountryModal({ open, setOpen, country, summary, loading,
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {country ? `🌍 ${t.summaryTitle} ${country.name.common}` : t.summaryTitle}
+           {country?.name?.common ? `🌍 ${country.name.common}` : t.summaryTitle}
+
           </DialogTitle>
         </DialogHeader>
 
