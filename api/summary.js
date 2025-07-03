@@ -44,7 +44,7 @@ export default async function handler(req, res) {
     const summary =
       geminiData?.candidates?.[0]?.content?.parts?.[0]?.text ||
       "Sorry, no summary could be generated.";
-
+    console.log("✅ Gemini full response:", JSON.stringify(geminiData, null, 2));
     return res.status(200).json({ summary });
   } catch (error) {
     console.error("❌ Gemini API Error:", error);
