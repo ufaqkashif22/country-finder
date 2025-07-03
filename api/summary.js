@@ -1,5 +1,3 @@
-// api/summary.js
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Only POST requests are allowed" });
@@ -19,7 +17,7 @@ export default async function handler(req, res) {
     }
 
     const geminiResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: {
@@ -30,7 +28,7 @@ export default async function handler(req, res) {
             {
               parts: [
                 {
-                  text: `Provide a short and friendly travel guide summary for ${country}.`,
+                  text: `Give a short and friendly travel guide summary (2–3 sentences) for tourists visiting ${country}. Highlight what it's known for and popular spots.`,
                 },
               ],
             },
@@ -41,10 +39,12 @@ export default async function handler(req, res) {
 
     const geminiData = await geminiResponse.json();
 
+    console.log("✅ Gemini full response:", JSON.stringify(geminiData, null, 2));
+
     const summary =
       geminiData?.candidates?.[0]?.content?.parts?.[0]?.text ||
       "Sorry, no summary could be generated.";
-    console.log("✅ Gemini full response:", JSON.stringify(geminiData, null, 2));
+
     return res.status(200).json({ summary });
   } catch (error) {
     console.error("❌ Gemini API Error:", error);
