@@ -44,11 +44,11 @@ useEffect(() => {
 
     try {
       const result = await signInWithPopup(auth, provider);
-      console.log("✅ Logged in user:", result.user);
+      console.log("Logged in user:", result.user);
       navigate("/app");
     } catch (error) {
       console.error("Login error:", error);
-      alert("Google Sign-in failed");
+    alert(`Google Sign-in failed:\n${error.code}\n${error.message}`);  
     }
   };
 
